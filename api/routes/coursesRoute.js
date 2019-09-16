@@ -78,9 +78,14 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
 router.post('/courses', authenticatedUser, async (req, res, next) => {
   try {
     const course = req.body;
+    if (req.body.title && req.body.description) {
     const data = await Courses.create(course)
     res.location(`/courses/${data.id}`)
     res.status(201).end();
+    }else{
+      res.status(400).json({ message: 'Missing Information' })
+    }
+    
   }
   catch (error) {
     error.status = 400;
@@ -92,12 +97,18 @@ router.post('/courses', authenticatedUser, async (req, res, next) => {
 router.put('/courses/:id', authenticatedUser, async (req, res) => {
   try {
     const course = await Courses.findByPk(req.params.id)
-    if (course) {
-      await course.update(req.body);
+    if (course.userId === req.body.userId) {
+      if (req.body.title && req.body.description) {
+        req.body.estimatedTime === req.body.estimatedTime &&
+          req.body.materialsNeeded === req.body.materialsNeeded
+        await course.update(req.body);
+        res.status(204).end();
+      } else {
+        res.status(400).json({ message: 'Missing Information' })
+      }
     } else {
-      res.status(404).json({ message: 'oh no' })
+      res.status(403).json({ message: 'You do not have permission to update this Course' })
     }
-    res.status(204).end();
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
       res.status(404).json({ error: error.message })
@@ -105,7 +116,6 @@ router.put('/courses/:id', authenticatedUser, async (req, res) => {
       return next(error)
     }
   }
-
 });
 
 //<===========delete the course id for the authenticated user==============
@@ -123,4 +133,5 @@ router.delete('/courses/:id', authenticatedUser, async (req, res) => {
   }
 
 });
+
 module.exports = router;

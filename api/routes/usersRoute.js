@@ -27,13 +27,13 @@ const authenticatedUser = async (req, res, next) => {
     }
   } else {
     message = 'Auth header not found';
-  } 
+  }
   if (message) {
     console.warn(message);
     res.status(401).json({ message: 'Access Denied' });
-  } else { 
+  } else {
     next();
-  } 
+  }
 };
 
 //<==========handles errors in async function ============================
@@ -56,19 +56,15 @@ router.get('/users', authenticatedUser, asyncHandler(async (req, res) => {
 }));
 //<===========post user ,creates a new user and hashes their created password to database for security purposes
 router.post('/users', async (req, res) => {
-  const user = req.body;
-  if(JSON.stringify(req.body)=== '{}'){
-    res.status(404).json({message: 'Please input a value'})
-  }
   try {
-    if (req.body.password) {
+    const user = req.body;
+    if (user.password && user.firstName && user.lastName && user.emailAddress) {
       req.body.password = bcryptjs.hashSync(req.body.password)
       await Users.create(user)
+      res.location('/').status(201).end();
     } else {
-      res.status(400).end();
+      res.status(400).json({ message: 'Missing Information' }).end();
     }
-    res.location('/').status(201).end();
-    res.json({ id: result.id })
   }
   catch (error) {
     if (error.name === 'SequelizeValidationError') {
@@ -80,5 +76,6 @@ router.post('/users', async (req, res) => {
     }
   };
 });
+
 
 module.exports = router;
