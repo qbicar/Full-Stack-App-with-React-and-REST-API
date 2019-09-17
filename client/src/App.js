@@ -1,43 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import './styles/global.css';
+// import logo from './logo.svg';
 import './App.css';
-const cors = require('cors')
-app.use(cors());
+import Header from './components/Header';
+import Courses from './components/Courses';
 
 
 export default class App extends Component {
-  getCourses = () => {
-    axios.get(`https://localhost:5000/api/courses`)
-      .then(response => {
-        
-      })
-      .catch(error => {
-        console.log("Error")
-      })
-  }
+
+
+render(){
+return (
+
+  <div className="container"> 
+  <Header/>
+  <Courses getCourses={this.getCourses}/>
+
+  <BrowserRouter>
+      <Switch>
+      <Route exact path="/" />
+      <Route path="/:id" Component={Courses} />
+      <Route path="/:name" />
+      <Route path="/:name" />
+      <Route path="/:name" />
+      </Switch>
+  </BrowserRouter> 
+  </div>
+)
 }
-
-
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
+}
