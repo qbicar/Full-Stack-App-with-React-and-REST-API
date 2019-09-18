@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import NotFound from './NotFound';
 
 
 
@@ -15,7 +16,6 @@ class Courses extends Component {
         courses: courses,
         logo: false
       }))
-      .then(() => console.log('yup'))
       .catch(error => {
         console.log("Error", error)
         this.setState({
@@ -27,25 +27,29 @@ class Courses extends Component {
   componentDidMount() {
     this.getCourses()
   }
+
+
   render() {
-    return (
-    
-    
-    <div className="grid-33" >
-      <a className="course--module course--link"
-        href={`/api/courses/id/courseDetail`}>
-        <h4 className="course--label">Course</h4>
-        <h3 className="course--title">{courses.title}</h3>
-      </a>
-      <a className="course--module course--add--module"
-        href="create-course.html"><h3 className="course--add--title"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-          viewBox="0 0 13 13" className="add">
-          <polygon points="7,6 7,0 6,0 6,6 0,6 0,7 6,7 6,13 7,13 7,7 13,7 13,6 "></polygon>
-        </svg>New Course</h3></a>
-    </div> 
+    const { courses } = this.state;
+ 
+    if(courses.length > 0){
+      const results =  courses.map(course => 
+        <div className="grid-33" >
+          <a className="course--module course--link"
+            href={`/${course.id}`}>
+            <h4 className="course--label">Course</h4>
+            <h3 className="course--title">{course.title}</h3>
+          </a>
+      </div>)
+        return results
+    }else{
+       return (
+      <NotFound />
     )
+    }
   }
 }
+
 
 
 export default Courses

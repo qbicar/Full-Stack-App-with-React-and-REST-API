@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
+import UserSignUp from './components/UserSignUp'
+import CourseDetails from './components/CourseDetails'
 import './styles/global.css';
 // import logo from './logo.svg';
 import './App.css';
@@ -16,15 +17,16 @@ return (
 
   <div className="container"> 
   <Header/>
-  <Courses getCourses={this.getCourses}/>
 
   <BrowserRouter>
       <Switch>
-      <Route exact path="/" />
-      <Route path="/:id" Component={Courses} />
-      <Route path="/:name" />
-      <Route path="/:name" />
-      <Route path="/:name" />
+      <Route exact path="/" component={Courses} />
+      {/* <Route path="/create" component={CreateCourse} /> */}
+      {/* <Route path="/:id/update" component={UpdateCourse} /> */}
+      <Route path="/:id" component={CourseDetails} />
+      {/* <Route path="/signin" component={UserSignIn} /> */}
+        <Route path="/signup" component={UserSignUp} />
+      {/* <Route path="/signout" component={UserSignOut} /> */}
       </Switch>
   </BrowserRouter> 
   </div>
