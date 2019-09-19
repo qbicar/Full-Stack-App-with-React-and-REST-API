@@ -276,6 +276,7 @@ body {
 
 /* line 57, ../sass/global.sass */
 h1 {
+  color: #fff;
   font-size: 36px;
   margin-bottom: 20px;
 }
@@ -294,6 +295,7 @@ a {
 
 /* line 66, ../sass/global.sass */
 p {
+  color: #fff;
   font-family: "Cousine";
   margin-bottom: 30px;
 }
@@ -560,14 +562,17 @@ p {
 }
 /* line 303, ../sass/global.sass */
 .course--stats--list > li {
+  color: #fff;
   margin-bottom: 50px;
 }
 /* line 305, ../sass/global.sass */
 .course--stats--list > li ul {
+  color:#fff;
   padding-left: 20px;
 }
 /* line 307, ../sass/global.sass */
 .course--stats--list > li li {
+  color:#fff;
   margin-bottom: 15px;
   list-style-type: circle;
 }

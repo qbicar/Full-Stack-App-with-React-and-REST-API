@@ -5,7 +5,7 @@ const CourseDetails = () => (
   <div className="bounds">
     <div className="actions--bar">
       <div className="bounds">
-        <div className="grid-100"><span><a className="button" href="update-course.html">Update Course</a><a className="button" href="#">Delete Course</a></span><a
+        <div className="grid-100"><span><a className="button" href="/:id/update">Update Course</a><a className="button" href="#">Delete Course</a></span><a
           className="button button-secondary" href="/">Return to List</a></div>
       </div>
     </div>
@@ -26,32 +26,32 @@ const CourseDetails = () => (
         </div>
       </div>
     </div>
+    <div className="grid-25 grid-right">
+      <div className="course--stats">
+        <ul className="course--stats--list">
+          <li className="course--stats--list--item">
+          <h4>Estimated Time</h4>
+          <h3>14 hours</h3>
+        </li>
+          <li className="course--stats--list--item">
+          <h4>Materials Needed</h4>
+          <ul>
+            <li>1/2 x 3/4 inch parting strip</li>
+            <li>1 x 2 common pine</li>
+            <li>1 x 4 common pine</li>
+            <li>1 x 10 common pine</li>
+            <li>1/4 inch thick lauan plywood</li>
+            <li>Finishing Nails</li>
+            <li>Sandpaper</li>
+            <li>Wood Glue</li>
+            <li>Wood Filler</li>
+            <li>Minwax Oil Based Polyurethane</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
-  //   <div className="grid-25 grid-right">
-  //     <div className="course--stats">
-  //       <ul className="course--stats--list">
-  //         <li className="course--stats--list--item">
-  //         <h4>Estimated Time</h4>
-  //         <h3>14 hours</h3>
-  //       </li>
-  //         <li className="course--stats--list--item">
-  //         <h4>Materials Needed</h4>
-  //         <ul>
-  //           <li>1/2 x 3/4 inch parting strip</li>
-  //           <li>1 x 2 common pine</li>
-  //           <li>1 x 4 common pine</li>
-  //           <li>1 x 10 common pine</li>
-  //           <li>1/4 inch thick lauan plywood</li>
-  //           <li>Finishing Nails</li>
-  //           <li>Sandpaper</li>
-  //           <li>Wood Glue</li>
-  //           <li>Wood Filler</li>
-  //           <li>Minwax Oil Based Polyurethane</li>
-  //         </ul>
-  //       </li>
-  //     </ul>
-  //   </div>
-  // </div>
+  </div>
 )
 
 export default CourseDetails

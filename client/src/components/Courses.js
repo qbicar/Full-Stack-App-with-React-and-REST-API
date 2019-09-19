@@ -41,12 +41,13 @@ class Courses extends Component {
             <h3 className="course--title">{course.title}</h3>
           </a>
       </div>)
-        return results
+        return results  
     }else{
        return (
       <NotFound />
     )
-    }
+    }  
+    
   }
 }
 
