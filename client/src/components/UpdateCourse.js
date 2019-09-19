@@ -9,7 +9,7 @@ const UpdateCourse = () => (
         <div className="grid-66">
           <div className="course--header">
             <h4 className="course--label">Course</h4>
-            <div><input id="title" name="title" type="text" class="input-title course--title--input" placeholder="Course title..."
+            <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..."
               value="Build a Basic Bookcase" /></div>
               <p>By Joe Smith</p>
             </div>
@@ -52,7 +52,7 @@ The specifications that follow will produce a bookcase with overall dimensions o
                 </ul>
               </div>
             </div>
-        <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='/:id';">Cancel</button></div>
+        <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick="event.preventDefault(); location.href='/:id';">Cancel</button></div>
           </form>
         </div>
       </div>

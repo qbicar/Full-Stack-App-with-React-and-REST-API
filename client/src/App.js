@@ -25,7 +25,7 @@ export default class App extends Component {
 
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={Courses} />
+            <Route key={0} exact path="/" component={Courses} />
             <Route path="/create" component={CreateCourse} />
             <Route path="/:id/update" component={UpdateCourse} />
             <Route path="/:id" component={CourseDetails} />
