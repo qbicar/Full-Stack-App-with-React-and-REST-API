@@ -5,15 +5,13 @@ import UpdateCourse from './components/UpdateCourse';
 import CourseDetails from './components/CourseDetails';
 import Header from './components/Header';
 import Courses from './components/Courses';
-// import UserSignOut from './components/UserSignOut';
+import UserSignOut from './components/UserSignOut';
 import UserSignIn from './components/UserSignIn';
 import CreateCourse from './components/CreateCourse';
-
 import './styles/global.css';
-// import logo from './logo.svg';
 import './App.css';
-
-
+import withContext from './styles/Context';
+const UserSignInWithContext = withContext(UserSignIn);
 export default class App extends Component {
 
 
@@ -26,15 +24,22 @@ export default class App extends Component {
         <BrowserRouter>
           <Switch>
             <Route key={0} exact path="/" component={Courses} />
-            <Route path="/create" component={CreateCourse} />
-            <Route path="/:id/update" component={UpdateCourse} />
-            <Route path="/:id" component={CourseDetails} />
-            <Route path="/signin" component={UserSignIn} />
+            <Route path="/courses/create" component={CreateCourse} />
+            <Route path={`/courses/:id/update`} component={UpdateCourse} />
+            <Route path="/courses/:id" component={CourseDetails} />
+            <Route path="/signin" component={UserSignInWithContext} />
             <Route path="/signup" component={UserSignUp} />
-            {/* <Route path="/signout" component={UserSignOut} /> */}
+            <Route path="/signout" component={UserSignOut} />
           </Switch>
         </BrowserRouter>
       </div>
     )
   }
 }
+
+//TODO: signin and signup to work
+//TODO: header to change on signin
+//TODO: components to actually do something
+//TODO: authorization
+//TODO: context
+//TODO: 

@@ -393,7 +393,7 @@ p {
 }
 /* line 137, ../sass/global.sass */
 .course--add--module:hover .course--add--title {
-  color: #444;
+  color: rgb(68, 68, 68);
 }
 /* line 139, ../sass/global.sass */
 .course--add--module:hover .add {
@@ -401,7 +401,7 @@ p {
 }
 /* line 141, ../sass/global.sass */
 .course--add--title {
-  color: #999;
+  color: rgb(153, 153, 153);
   display: inline-block;
   font-size: 18px;
   position: absolute;
@@ -417,7 +417,7 @@ p {
   width: 13px;
   height: auto;
   margin: 0 5px 0 0;
-  fill: #999;
+  fill: rgb(153, 153, 153);
 }
 /* line 159, ../sass/global.sass */
 .course--detail {
@@ -436,7 +436,7 @@ p {
 .course--header .course--title {
   font-size: 48px;
   margin-bottom: 15px;
-  color: #332a40;
+  color: #ffffff;
 }
 /* line 171, ../sass/global.sass */
 .course--header p {
@@ -460,9 +460,9 @@ p {
 }
 /* line 190, ../sass/global.sass */
 .course--description p {
-  font-size: 16px;
+  font-size: 20px;
   line-height: 1.8;
-  color: #444;
+  color: rgb(255, 255, 255);
 }
 /* line 195, ../sass/global.sass */
 .course--description ol,
