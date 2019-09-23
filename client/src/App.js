@@ -10,11 +10,15 @@ import UserSignIn from './components/UserSignIn';
 import CreateCourse from './components/CreateCourse';
 import './styles/global.css';
 import './App.css';
-import withContext from './styles/Context';
-const UserSignInWithContext = withContext(UserSignIn);
+import withContext from './components/Context';
+const UserSignInWithContext = withContext(UserSignIn); 
+// const HeaderWithContext = withContext(Header);
+//   const AuthWithContext = withContext(Authenticated);
+  const UserSignUpWithContext = withContext(UserSignUp);
+  const UserSignOutWithContext = withContext(UserSignOut);
+
 export default class App extends Component {
-
-
+ 
   render() {
     return (
 
@@ -28,8 +32,8 @@ export default class App extends Component {
             <Route path={`/courses/:id/update`} component={UpdateCourse} />
             <Route path="/courses/:id" component={CourseDetails} />
             <Route path="/signin" component={UserSignInWithContext} />
-            <Route path="/signup" component={UserSignUp} />
-            <Route path="/signout" component={UserSignOut} />
+            <Route path="/signup" component={UserSignUpWithContext} />
+            <Route path="/signout" component={UserSignOutWithContext} />
           </Switch>
         </BrowserRouter>
       </div>

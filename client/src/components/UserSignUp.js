@@ -30,7 +30,7 @@ export default class UserSignUp extends Component {
               <div><input id="password" name="password" type="password" className="" placeholder="Password" value="" /></div>
               <div><input id="confirmPassword" name="confirmPassword" type="password" className="" placeholder="Confirm Password"
                 value="" /></div>
-              <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign Up</button>
+              <div className="grid-100 pad-bottom"><button className="button" type="submit" onClick={this.submit}>Sign Up</button>
                 <Link className="button button-secondary" to='/'>Cancel</Link></div>
 
             </form>

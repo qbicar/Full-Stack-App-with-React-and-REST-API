@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import {Link} from 'react-router-dom';
 
 class UpdateCourse extends Component {
   constructor() {
@@ -67,8 +67,8 @@ class UpdateCourse extends Component {
                     </ul>
                   </div>
                 </div>
-                <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button>
-                  <button className="button button-secondary" onClick="event.preventDefault(); location.href='/courses/:id';">Cancel</button>
+                <div className="grid-100 pad-bottom"><button className="button" type="submit" onClick = {this.submit}>Update Course</button>
+                  <Link className="button button-secondary" to={'/courses/' + this.props.match.params.id}>Cancel</Link>
                 </div>
               </form>
             </div>

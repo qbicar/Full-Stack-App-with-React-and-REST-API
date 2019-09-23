@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+
 
 class CreateCourse extends Component {
   state = {
@@ -11,7 +11,6 @@ class CreateCourse extends Component {
   };
 
   render() {
-    const courses = this.state.courses;
     return (
       <div className="bounds course--detail">
         <h1>Create Course</h1>

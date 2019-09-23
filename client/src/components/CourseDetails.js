@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-class courseDetails extends Component {
+class CourseDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -82,4 +82,4 @@ class courseDetails extends Component {
     )
   }
 }
-export default courseDetails
+export default CourseDetails
