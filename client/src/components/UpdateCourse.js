@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class UpdateCourse extends Component {
   constructor(props) {
     super(props);
     this.state = {
       courses: [],
-      id: "",
       title: "",
       description: "",
       materialsNeeded: "",
@@ -31,37 +30,37 @@ class UpdateCourse extends Component {
       })
   }
 
+
   submit = e => {
     e.preventDefault();
-
     const { context } = this.props;
+    const courses = this.state;
     const authUser = context.authenticatedUser;
     const emailAddress = authUser.emailAddress;
     const password = authUser.password;
     const credentials = btoa(`${authUser.emailAddress}:` + password);
 
-    // making sure title and description fields are not empty before updating the course
-    if (this.state.description === '' || this.state.title === '') {
+    
+    if (courses.courses[0].description === '' || courses.courses[0].title === '') {
       this.setState({
         errors: 'Course and Description are required'
       })
     } else {
       axios({
         method: 'put',
-        url: `http://localhost:5000/api/courses/${this.props.match.params.id}`,
+        url: 'http://localhost:5000/api/courses/'+ this.props.match.params.id,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'Authorization': `Basic ${credentials}`
         },
-        auth: {
-          username: emailAddress,
-          password
-        },
+        
+        auth: 'Basic' + btoa(this.props.context.authenticatedUser.emailAddress),
+      
         data: {
-          title: this.state.title,
-          description: this.state.description,
-          estimatedTime: this.state.estimatedTime,
-          materialsNeeded: this.state.materialsNeeded
+          title: courses.title,
+          description: courses.description,
+          estimatedTime: courses.estimatedTime,
+          materialsNeeded: courses.materialsNeeded
         }
       }).then(() => {
         alert("Course updated successfully");
@@ -81,7 +80,10 @@ class UpdateCourse extends Component {
 
   render() {
     const courses = this.state.courses;
+    const { context } = this.props;
+    const authUser = context.authenticatedUser;
     return (
+
       <div>
         {courses.map(course =>
           <div className="bounds course--detail">
@@ -92,11 +94,11 @@ class UpdateCourse extends Component {
                   <div className="course--header">
                     <h4 className="course--label">Course</h4>
                     <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..."
-                      defaultValue={course.title} onChange={this.change}/></div>
-                    <p>{course.firstName} {course.lastName}</p>
+                      defaultValue={course.title} onChange={this.change} /></div>
+                    <p>{course.user.firstName} {course.user.lastName}</p>
                   </div>
                   <div className="course--description">
-                    <div><textarea id="description" name="description" className="" placeholder="Course description..." defaultValue={course.description} onChange={this.change}/>
+                    <div><textarea id="description" name="description" className="" placeholder="Course description..." defaultValue={course.description} onChange={this.change} />
                     </div>
                   </div>
                 </div>
@@ -105,17 +107,19 @@ class UpdateCourse extends Component {
                     <ul className="course--stats--list">
                       <li key="0" className="course--stats--list--item">
                         <h4>Estimated Time</h4>
-                        <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue={course.estimatedTime} onChange={this.change}/></div>
+                        <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue={course.estimatedTime} onChange={this.change} /></div>
                       </li>
                       <li key="1" className="course--stats--list--item">
                         <h4>Materials Needed</h4>
-                        <div><textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..." defaultValue={course.materialsNeeded} onChange={this.change}/>
+                        <div><textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..." defaultValue={course.materialsNeeded} onChange={this.change} />
                         </div>
                       </li>
                     </ul>
                   </div>
                 </div>
-                <div className="grid-100 pad-bottom"><button className="button" type="submit" onClick = {this.submit}>Update Course</button>
+                <div className="grid-100 pad-bottom">
+                  {(authUser && authUser.id === course.user.id) &&
+                    <button className="button" type="submit" onClick={this.submit}>Update Course</button>}
                   <Link className="button button-secondary" to={'/courses/' + this.props.match.params.id}>Cancel</Link>
                 </div>
               </form>
@@ -123,7 +127,6 @@ class UpdateCourse extends Component {
           </div>
         )}
       </div>
-
     )
   }
 }

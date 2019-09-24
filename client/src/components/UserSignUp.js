@@ -12,7 +12,7 @@ export default class UserSignUp extends Component {
     errors: []
   }
 
-  // update any changes
+
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -24,7 +24,7 @@ export default class UserSignUp extends Component {
     });
   }
 
-  // handles the submit button to sign up users and redirects them to the authenticated page
+
   submit = () => {
     const { context } = this.props;
 
@@ -36,7 +36,7 @@ export default class UserSignUp extends Component {
       confirmPassword
     } = this.state;
 
-    // New user payload
+
     const user = {
       firstName,
       lastName,
@@ -44,7 +44,7 @@ export default class UserSignUp extends Component {
       password,
     };
 
-    // Making sure the passwords matches before creating the user profile 
+
     if (password !== confirmPassword) {
       this.setState(() => {
         return { errors: ['Passwords must match'] }
@@ -68,12 +68,12 @@ export default class UserSignUp extends Component {
     }
   }
 
-  // handles the cancel button
+
   cancel = () => {
     this.props.history.push('/');
   }
 
-  // displays the sign up page
+
   render() {
     const {
       firstName,

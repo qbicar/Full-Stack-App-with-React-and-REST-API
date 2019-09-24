@@ -8,9 +8,9 @@ class CourseDetails extends Component {
     super(props);
     this.state = {
       courses: [],
-
     }
   }
+
   componentDidMount() {
 
     axios.get('http://localhost:5000/api/courses/' + this.props.match.params.id)
@@ -24,48 +24,23 @@ class CourseDetails extends Component {
           console.log('ohh nooo')
         }
       })
-  }
-  delete = async (e) => {
-    e.preventDefault();
-    const { context } = this.props;
-    const authUser = context.authenticatedUser;
-    let password = prompt("Please enter your password to confirm this action");
-    // used axios here to ensure that I know how to do an axios post as well as get
-    axios.delete(`localhost:5000/courses/${this.state.course.id}`, {
-      method: 'DELETE',
-      auth: {
-        username: `${authUser.emailAddress}`,
-        password: password
-      },
-    }).then(() => {
-      this.props.history.push("/");
-    })
-      .catch(err => {
-        console.log(err);
-        this.props.history.push("/error");
-      });
-  }
-
-
-
-
+    }
 
   render() {
-    // const { context} = this.props;
+    const { context} = this.props;
+    const authUser = context.authenticatedUser;
     const courses = this.state.courses;
-
-
     return (
       <div className="bounds">
         {courses.map(course =>
           <div>
             <div className="actions--bar">
               <div className="bounds">
-                <div className="grid-100"><span>
-
-                  <Link key="0" className="button" to={'/courses/' + this.props.match.params.id + '/update'}>Update Course</Link>
+                <div className="grid-100">
+{(authUser && authUser.id === course.user.id) && 
+                 <span> <Link key="0" className="button" to={'/courses/' + this.props.match.params.id + '/update'}>Update Course</Link>
                   <Link key="1" className="button" to="#" onClick={this.delete}>Delete Course</Link></span>
-
+}
                   <Link key="2" className="button button-secondary" to="/">Return to List</Link>
                 </div>
               </div>
