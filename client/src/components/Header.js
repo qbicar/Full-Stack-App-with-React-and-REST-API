@@ -1,13 +1,26 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
-const Header = () => (
-  <div className="header">
-    <div className="bounds">
-      <header>
+const Header = (props) => {
+  const { context } = props;
+  const authUser = context.authenticatedUser;
+
+  return (
+    <div className="header">
+      <div className="bounds">
         <h1 className="header--logo">Courses</h1>
-        <nav><a className="home" href="/">Home</a><a className="signup" href="/signup">Sign Up</a><a className="signin" href="/signin">Sign In</a></nav>
-      </header>
+        {authUser ?
+        <nav>
+          <span>Welcome, {authUser.firstName} {authUser.lastName}</span>
+          <NavLink className="signout" to="/signout">Sign Out</NavLink>
+        </nav> :
+      <nav>
+        <NavLink className="home" to="/">Home</NavLink>
+        <NavLink className="signup" to="/signup">Sign Up</NavLink>
+        <NavLink className="signin" to="/signin">Sign In</NavLink>
+      </nav>
+        }
+    </div >
     </div>
-  </div>
-)
+)}
 export default Header

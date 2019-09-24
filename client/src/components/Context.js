@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Cookies from 'js-cookie';
 import Data from '../Data';
+import Cookies from 'js-cookie';
 
 const Context = React.createContext();
 
@@ -15,6 +15,28 @@ export class Provider extends Component {
     this.data = new Data();
   }
 
+  signIn = async (emailAddress, password) => {
+    const user = await this.data.getUser(emailAddress, password);
+    if (user !== null) {
+      this.setState(() => {
+        return {
+          authenticatedUser: user,
+        };
+      });
+      Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
+    }
+    return user;
+  }
+
+  signOut = () => {
+    this.setState(() => {
+      return {
+        authenticatedUser: null,
+      };
+    });
+    Cookies.remove('authenticatedUser');
+  }
+
   render() {
     const { authenticatedUser } = this.state;
     const value = {
@@ -23,32 +45,14 @@ export class Provider extends Component {
       actions: {
         signIn: this.signIn,
         signOut: this.signOut
-      },
+      }
     };
+
     return (
       <Context.Provider value={value}>
         {this.props.children}
       </Context.Provider>
     );
-  }
-
-
-  signIn = async (emailAddress, password) => {
-    const user = await this.data.getUser(emailAddress, password);
-    if (user !== null) {
-      this.setState({authenticatedUser: user});
-      this.state.authenticatedUser.emailAddress = emailAddress;
-      this.state.authenticatedUser.password = password;
-        
-      
-      Cookies.set('authenticatedUser', JSON.stringify(user), { expires:1 });
-    }
-    return user;
-  }
-
-  signOut = () => {
-    this.setState({ authenticatedUser: null });
-    Cookies.remove('authenticatedUser');
   }
 }
 

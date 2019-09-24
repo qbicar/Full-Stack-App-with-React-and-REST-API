@@ -3,8 +3,8 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 
 class UpdateCourse extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       courses: [],
       id: "",
@@ -31,6 +31,54 @@ class UpdateCourse extends Component {
       })
   }
 
+  submit = e => {
+    e.preventDefault();
+
+    const { context } = this.props;
+    const authUser = context.authenticatedUser;
+    const emailAddress = authUser.emailAddress;
+    const password = authUser.password;
+    const credentials = btoa(`${authUser.emailAddress}:` + password);
+
+    // making sure title and description fields are not empty before updating the course
+    if (this.state.description === '' || this.state.title === '') {
+      this.setState({
+        errors: 'Course and Description are required'
+      })
+    } else {
+      axios({
+        method: 'put',
+        url: `http://localhost:5000/api/courses/${this.props.match.params.id}`,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Authorization': `Basic ${credentials}`
+        },
+        auth: {
+          username: emailAddress,
+          password
+        },
+        data: {
+          title: this.state.title,
+          description: this.state.description,
+          estimatedTime: this.state.estimatedTime,
+          materialsNeeded: this.state.materialsNeeded
+        }
+      }).then(() => {
+        alert("Course updated successfully");
+        this.props.history.push("/");
+      }).catch(err => {
+        if (err.response.status === 400) {
+          this.setState({
+            errors: err.response.data.message
+          })
+        } else if (err.response.status === 500) {
+          this.props.history.push("/error");
+        }
+      })
+    }
+  }
+
+
   render() {
     const courses = this.state.courses;
     return (
@@ -39,17 +87,17 @@ class UpdateCourse extends Component {
           <div className="bounds course--detail">
             <h1>Update Course</h1>
             <div>
-              <form>
+              <form onSubmit={this.submit}>
                 <div className="grid-66">
                   <div className="course--header">
                     <h4 className="course--label">Course</h4>
                     <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..."
-                      defaultValue={course.title} /></div>
+                      defaultValue={course.title} onChange={this.change}/></div>
                     <p>{course.firstName} {course.lastName}</p>
                   </div>
                   <div className="course--description">
-                    <div><textarea id="description" name="description" className="" placeholder="Course description..." defaultValue={course.description}>
-                    </textarea></div>
+                    <div><textarea id="description" name="description" className="" placeholder="Course description..." defaultValue={course.description} onChange={this.change}/>
+                    </div>
                   </div>
                 </div>
                 <div className="grid-25 grid-right">
@@ -57,12 +105,12 @@ class UpdateCourse extends Component {
                     <ul className="course--stats--list">
                       <li key="0" className="course--stats--list--item">
                         <h4>Estimated Time</h4>
-                        <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue={course.estimatedTime} /></div>
+                        <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue={course.estimatedTime} onChange={this.change}/></div>
                       </li>
                       <li key="1" className="course--stats--list--item">
                         <h4>Materials Needed</h4>
-                        <div><textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..." defaultValue={course.materialsNeeded}>
-                        </textarea></div>
+                        <div><textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..." defaultValue={course.materialsNeeded} onChange={this.change}/>
+                        </div>
                       </li>
                     </ul>
                   </div>

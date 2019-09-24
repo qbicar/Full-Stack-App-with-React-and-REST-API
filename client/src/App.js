@@ -11,8 +11,13 @@ import CreateCourse from './components/CreateCourse';
 import './styles/global.css';
 import './App.css';
 import withContext from './components/Context';
+
+const CourseDetailsWithContext = withContext(CourseDetails)
+const CoursesWithContext = withContext(Courses)
+const UpdateCourseWithContext = withContext(UpdateCourse)
+const CreateCourseWithContext = withContext(CreateCourse)
 const UserSignInWithContext = withContext(UserSignIn); 
-// const HeaderWithContext = withContext(Header);
+const HeaderWithContext = withContext(Header);
 //   const AuthWithContext = withContext(Authenticated);
   const UserSignUpWithContext = withContext(UserSignUp);
   const UserSignOutWithContext = withContext(UserSignOut);
@@ -23,14 +28,15 @@ export default class App extends Component {
     return (
 
       <div className="container">
-        <Header />
+       
 
-        <BrowserRouter>
+        <BrowserRouter> 
+        <HeaderWithContext />
           <Switch>
-            <Route key={0} exact path="/" component={Courses} />
-            <Route path="/courses/create" component={CreateCourse} />
-            <Route path={`/courses/:id/update`} component={UpdateCourse} />
-            <Route path="/courses/:id" component={CourseDetails} />
+            <Route exact path="/" component={CoursesWithContext} />
+            <Route path="/courses/create" component={CreateCourseWithContext } />
+            <Route path={`/courses/:id/update`} component={UpdateCourseWithContext} />
+            <Route path="/courses/:id" component={CourseDetailsWithContext} />
             <Route path="/signin" component={UserSignInWithContext} />
             <Route path="/signup" component={UserSignUpWithContext} />
             <Route path="/signout" component={UserSignOutWithContext} />
