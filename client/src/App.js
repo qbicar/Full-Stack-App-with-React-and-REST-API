@@ -17,25 +17,25 @@ const CourseDetailsWithContext = withContext(CourseDetails)
 const CoursesWithContext = withContext(Courses)
 const UpdateCourseWithContext = withContext(UpdateCourse)
 const CreateCourseWithContext = withContext(CreateCourse)
-const UserSignInWithContext = withContext(UserSignIn); 
+const UserSignInWithContext = withContext(UserSignIn);
 const HeaderWithContext = withContext(Header);
 //   const AuthWithContext = withContext(Authenticated);
-  const UserSignUpWithContext = withContext(UserSignUp);
-  const UserSignOutWithContext = withContext(UserSignOut);
+const UserSignUpWithContext = withContext(UserSignUp);
+const UserSignOutWithContext = withContext(UserSignOut);
 
 export default class App extends Component {
- 
+
   render() {
     return (
 
       <div className="container">
-       
 
-        <BrowserRouter> 
-        <HeaderWithContext />
+
+        <BrowserRouter>
+          <HeaderWithContext />
           <Switch>
             <Route exact path="/" component={CoursesWithContext} />
-            <PrivateRoute path="/courses/create" component={CreateCourseWithContext } />
+            <PrivateRoute path="/courses/create" component={CreateCourseWithContext} />
             <PrivateRoute path="/courses/:id/update" component={UpdateCourseWithContext} />
             <Route path="/courses/:id" component={CourseDetailsWithContext} />
             <Route path="/signin" component={UserSignInWithContext} />

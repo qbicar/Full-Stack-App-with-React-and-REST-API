@@ -14,6 +14,10 @@ export class Provider extends Component {
     super();
     this.data = new Data();
   }
+updateCourse = async (courses, credentials, authUser)=>{
+  
+}
+
 
   signIn = async (emailAddress, password) => {
     const user = await this.data.getUser(emailAddress, password);

@@ -31,13 +31,13 @@ class UpdateCourse extends Component {
   submit = e => {
     e.preventDefault();
     const { context } = this.props;
-    const {id, title, description, estimatedTime, materialsNeeded } = this.state;
+    const { id, title, description, estimatedTime, materialsNeeded } = this.state;
     const courses = { id, title, description, estimatedTime, materialsNeeded };
     const authUser = context.authenticatedUser;
     const emailAddress = authUser.emailAddress;
     const password = authUser.password;
     const credentials = btoa(`${emailAddress}:` + password);
-    context.data.updateCourse(courses, credentials.authUser,)
+    context.data.updateCourse(courses, credentials, authUser)
 
 
     if (courses.description === '' || courses.title === '') {
@@ -54,9 +54,11 @@ class UpdateCourse extends Component {
         },
 
         auth:
-          //   emailAddress: emailAddress,
-          // password},
-          'Basic' + btoa(this.props.context.authenticatedUser.emailAddress),
+        {
+          emailAddress: emailAddress,
+          password
+        },
+        // 'Basic' + btoa(this.props.context.authenticatedUser.emailAddress),
 
         data: {
           title: courses.title,
