@@ -11,6 +11,7 @@ import CreateCourse from './components/CreateCourse';
 import './styles/global.css';
 import './App.css';
 import withContext from './components/Context';
+import PrivateRoute from './components/PrivateRoute';
 
 const CourseDetailsWithContext = withContext(CourseDetails)
 const CoursesWithContext = withContext(Courses)
@@ -34,8 +35,8 @@ export default class App extends Component {
         <HeaderWithContext />
           <Switch>
             <Route exact path="/" component={CoursesWithContext} />
-            <Route path="/courses/create" component={CreateCourseWithContext } />
-            <Route path={`/courses/:id/update`} component={UpdateCourseWithContext} />
+            <PrivateRoute path="/courses/create" component={CreateCourseWithContext } />
+            <PrivateRoute path="/courses/:id/update" component={UpdateCourseWithContext} />
             <Route path="/courses/:id" component={CourseDetailsWithContext} />
             <Route path="/signin" component={UserSignInWithContext} />
             <Route path="/signup" component={UserSignUpWithContext} />

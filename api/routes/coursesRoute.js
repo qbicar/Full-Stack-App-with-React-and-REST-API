@@ -75,7 +75,7 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
 //<===========on courses it will seach for tha authenticated user and they will be able to create a course.
 //<===========After course is created it will have an id and also link to their userId in the database=====
 
-router.post('/courses', authenticatedUser, async (req, res, next) => {
+router.post('/courses', async (req, res, next) => {
   try {
     const course = req.body;
     if (req.body.title && req.body.description) {
@@ -94,7 +94,7 @@ router.post('/courses', authenticatedUser, async (req, res, next) => {
 })
 
 //<===========update my course for the authenticated user================== 
-router.put('/courses/:id', authenticatedUser, async (req, res) => {
+router.put('/courses/:id', async (req, res, next) => {
   try {
     const course = await Courses.findByPk(req.params.id)
     if (course.userId === req.body.userId) {
@@ -119,7 +119,7 @@ router.put('/courses/:id', authenticatedUser, async (req, res) => {
 });
 
 //<===========delete the course id for the authenticated user==============
-router.delete('/courses/:id', authenticatedUser, async (req, res) => {
+router.delete('/courses/:id', async (req, res) => {
   try {
     const course = await Courses.findByPk(req.params.id)
     if (course) {

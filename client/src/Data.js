@@ -1,7 +1,7 @@
 import config from './Config';
 
 export default class Data {
-  api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) {
+  api(path, method = 'GET', body = null, requiresAuth = false, credentials = "") {
     const url = config.apiBaseUrl + path;
 
     const options = {
@@ -35,6 +35,23 @@ export default class Data {
     }
   }
 
+  async updateCourse(courses, credentials) {
+    const response = await this.api(`/courses/${courses.id}`, 'PUT', courses,true, credentials);
+    if (response.status === 204) {
+      return [];
+    }
+    else if (response.status === 404) {
+      return response.json().then(data => {
+        return data.errors;
+      });
+    }
+    else {
+    return response.status;
+    }
+  }
+
+
+
   async createUser(user) {
     const response = await this.api('/users', 'POST', user);
     if (response.status === 201) {
@@ -49,4 +66,20 @@ export default class Data {
       throw new Error();
     }
   }
+  async createCourse(course, authenticatedUser){
+    const response = await this.api('/courses', 'POST', course, authenticatedUser);
+  if (response.status === 201) {
+    return [];
+  }
+  else if (response.status === 401) {
+    return response.json().then(data => {
+      return data.errors;
+    });
+  }
+  else {
+    throw new Error();
+  }
 }
+
+}
+

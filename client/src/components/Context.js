@@ -36,13 +36,17 @@ export class Provider extends Component {
     });
     Cookies.remove('authenticatedUser');
   }
+  createCourse = async(courses) => {
 
+  }
   render() {
     const { authenticatedUser } = this.state;
     const value = {
       authenticatedUser,
       data: this.data,
       actions: {
+        updateCourse: this.updateCourse,
+        getCourse: this.getCourse,
         signIn: this.signIn,
         signOut: this.signOut
       }

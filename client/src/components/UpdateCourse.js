@@ -7,6 +7,7 @@ class UpdateCourse extends Component {
     super(props);
     this.state = {
       courses: [],
+      id: "",
       title: "",
       description: "",
       materialsNeeded: "",
@@ -15,47 +16,48 @@ class UpdateCourse extends Component {
       lastName: ""
     }
   }
-  componentDidMount() {
+  change = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
 
-    axios.get('http://localhost:5000/api/courses/' + this.props.match.params.id)
-      .then(response => {
-        this.setState({
-          courses: response.data,
-        })
-      })
-      .catch(error => {
-        if (error.status === 404) {
-          console.log('ohh nooo')
-        }
-      })
+    this.setState(() => {
+      return {
+        [name]: value
+      };
+    });
   }
 
 
   submit = e => {
     e.preventDefault();
     const { context } = this.props;
-    const courses = this.state;
+    const {id, title, description, estimatedTime, materialsNeeded } = this.state;
+    const courses = { id, title, description, estimatedTime, materialsNeeded };
     const authUser = context.authenticatedUser;
     const emailAddress = authUser.emailAddress;
     const password = authUser.password;
-    const credentials = btoa(`${authUser.emailAddress}:` + password);
+    const credentials = btoa(`${emailAddress}:` + password);
+    context.data.updateCourse(courses, credentials.authUser,)
 
-    
-    if (courses.courses[0].description === '' || courses.courses[0].title === '') {
+
+    if (courses.description === '' || courses.title === '') {
       this.setState({
         errors: 'Course and Description are required'
       })
     } else {
       axios({
-        method: 'put',
-        url: 'http://localhost:5000/api/courses/'+ this.props.match.params.id,
+        method: 'PUT',
+        url: 'http://localhost:5000/api/courses/' + this.props.match.params.id,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'Authorization': `Basic ${credentials}`
         },
-        
-        auth: 'Basic' + btoa(this.props.context.authenticatedUser.emailAddress),
-      
+
+        auth:
+          //   emailAddress: emailAddress,
+          // password},
+          'Basic' + btoa(this.props.context.authenticatedUser.emailAddress),
+
         data: {
           title: courses.title,
           description: courses.description,
@@ -76,6 +78,25 @@ class UpdateCourse extends Component {
       })
     }
   }
+
+
+
+  componentDidMount() {
+
+    axios.get('http://localhost:5000/api/courses/' + this.props.match.params.id)
+      .then(response => {
+        this.setState({
+          courses: response.data,
+          id: this.props.match.params.id
+        })
+      })
+      .catch(error => {
+        if (error.status === 404) {
+          console.log('ohh nooo')
+        }
+      })
+  }
+
 
 
   render() {

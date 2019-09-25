@@ -6,7 +6,7 @@ export default class Courses extends Component {
 
   state = {
     errors: [],
-    courseTitle: '',
+    title: '',
     description: '',
     estimatedTime: '',
     materialsNeeded: ''
@@ -15,7 +15,7 @@ export default class Courses extends Component {
   render() {
     const {
       errors,
-      courseTitle,
+      title,
       description,
       estimatedTime,
       materialsNeeded,
@@ -47,12 +47,12 @@ export default class Courses extends Component {
                   <div className="course--header">
                     <h4 className="course--label">Course</h4>
                     <React.Fragment>
-                      <input id="courseTitle"
-                        name="courseTitle"
+                      <input id="title"
+                        name="title"
                         type="text"
                         className="input-title course--title--input"
                         placeholder="Course title..."
-                        value={courseTitle}
+                        value={title}
                         onChange={this.change} />
                     </React.Fragment>
                     <p>By {authenticatedUser.firstName} {authenticatedUser.lastName}</p>
@@ -160,7 +160,7 @@ export default class Courses extends Component {
         });
     } else {
       console.log("nope")
-      // e.preventDefault();
+      context.data.createCourse()
     }
   };
 
@@ -249,7 +249,7 @@ export default class Courses extends Component {
 
 //   render() {
 //     const { errors,
-//       courseTitle,
+//       titleitle,
 //       description,
 //       estimatedTime,
 //       materialsNeeded} = this.state;
