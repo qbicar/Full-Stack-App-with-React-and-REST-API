@@ -75,6 +75,7 @@ class UpdateCourse extends Component {
             errors: err.response.data.message
           })
         } else if (err.response.status === 500) {
+          alert("Course and Description must be updated ")
           this.props.history.push("/error");
         }
       })

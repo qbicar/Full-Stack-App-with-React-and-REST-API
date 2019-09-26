@@ -40,7 +40,7 @@ export default class Data {
     if (response.status === 204) {
       return [];
     }
-    else if (response.status === 404) {
+    else if (response.status === 403) {
       return response.json().then(data => {
         return data.errors;
       });
@@ -49,8 +49,6 @@ export default class Data {
     return response.status;
     }
   }
-
-
 
   async createUser(user) {
     const response = await this.api('/users', 'POST', user);
@@ -66,12 +64,12 @@ export default class Data {
       throw new Error();
     }
   }
-  async createCourse(course, authenticatedUser){
-    const response = await this.api('/courses', 'POST', course, authenticatedUser);
+  async createCourse(courses, credentials){
+    const response = await this.api(`/courses/${courses.id}`, 'POST', courses,true, credentials);
   if (response.status === 201) {
     return [];
   }
-  else if (response.status === 401) {
+  else if (response.status === 403) {
     return response.json().then(data => {
       return data.errors;
     });

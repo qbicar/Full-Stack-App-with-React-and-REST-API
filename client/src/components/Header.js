@@ -8,7 +8,7 @@ const Header = (props) => {
   return (
     <div className="header">
       <div className="bounds">
-        <h1 className="header--logo">Courses</h1>
+        <h1 className="header--logo"><NavLink to="/">Courses</NavLink></h1>
         {authUser ?
         <nav>
           <span>Welcome, {authUser.firstName} {authUser.lastName}</span>

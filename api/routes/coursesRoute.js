@@ -75,7 +75,7 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
 //<===========on courses it will seach for tha authenticated user and they will be able to create a course.
 //<===========After course is created it will have an id and also link to their userId in the database=====
 
-router.post('/courses', async (req, res, next) => {
+router.post('/courses/', async (req, res, next) => {
   try {
     const course = req.body;
     if (req.body.title && req.body.description) {
@@ -97,7 +97,6 @@ router.post('/courses', async (req, res, next) => {
 router.put('/courses/:id', async (req, res, next) => {
   try {
     const course = await Courses.findByPk(req.params.id)
-    if (course.userId === req.body.userId) {
       if (req.body.title && req.body.description) {
         req.body.estimatedTime === req.body.estimatedTime &&
           req.body.materialsNeeded === req.body.materialsNeeded
@@ -106,10 +105,7 @@ router.put('/courses/:id', async (req, res, next) => {
       } else {
         res.status(400).json({ message: 'Missing Information' })
       }
-    } else {
-      res.status(403).json({ message: 'You do not have permission to update this Course' })
-    }
-  } catch (error) {
+    }catch (error) {
     if (error.name === 'SequelizeValidationError') {
       res.status(404).json({ error: error.message })
     } else {

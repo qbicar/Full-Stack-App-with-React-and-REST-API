@@ -1,27 +1,85 @@
 import React, { Component } from 'react';
-import { } from "react-router-dom";
 import Form from "./Form";
+import axios from 'axios';
 
 export default class Courses extends Component {
 
   state = {
-    errors: [],
+    courses: [],
+    id: "",
     title: '',
     description: '',
     estimatedTime: '',
-    materialsNeeded: ''
+    materialsNeeded: '',
+    errors: ''
   };
 
-  render() {
-    const {
-      errors,
-      title,
-      description,
-      estimatedTime,
-      materialsNeeded,
-    } = this.state;
+  change = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
 
-    const { authenticatedUser } = this.props.context;
+    this.setState(() => {
+      return {
+        [name]: value
+      };
+    });
+  };
+
+  submit = (e) => {
+  
+    const { context } = this.props;
+    const { id, title, description, estimatedTime, materialsNeeded, errors } = this.state;
+    const courses = { id, title, description, estimatedTime, materialsNeeded, errors };
+    const authUser = context.authenticatedUser;
+    const emailAddress = authUser.emailAddress;
+    const password = authUser.password;
+    const credentials = btoa(`${emailAddress}:` + password);
+    context.data.createCourse(courses, credentials, authUser)
+
+    if (errors.length > 0) {
+      context.data.createCourse(courses, credentials)
+        .then(errors => {
+          if (errors.length) {
+            e.preventDefault();
+            this.setState({ errors })
+          } else {
+            context.actions.createCourse(courses, credentials)
+              .then(this.props.history.push('/'));
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.props.history.push('/error');
+        });
+    } else {
+      console.log("nope")
+      context.data.createCourse(courses, credentials, authUser)
+    }
+  };
+
+  componentDidMount() {
+
+    axios.get('http://localhost:5000/api/courses/' + this.props.match.params.id)
+      .then(response => {
+        this.setState({
+          courses: response.data,
+          id: this.props.match.params.id
+        })
+      })
+      .catch(error => {
+        if (error.status === 404) {
+          console.log('ohh nooo')
+        }
+      })
+  }
+
+
+  render() {
+    const { errors, title,description,estimatedTime,materialsNeeded,} = this.state;
+ const courses = this.state.courses;
+const { context } = this.props;
+const authUser = context.authenticatedUser;
+const { authenticatedUser } = this.props.context;
 
     return (
 
@@ -111,58 +169,8 @@ export default class Courses extends Component {
     );
   }
 
-  change = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
 
-    this.setState(() => {
-      return {
-        [name]: value
-      };
-    });
-  };
-
-  submit = (e) => {
-    const { context } = this.props;
-
-    const {
-      authenticatedUser,
-      title,
-      description,
-      estimatedTime,
-      materialsNeeded,
-      errors
-    } = this.state;
-
-    const course = {
-      authenticatedUser,
-      title,
-      description,
-      estimatedTime,
-      materialsNeeded,
-      errors
-    };
-
-    if (errors.length > 0) {
-      context.data.createCourse(course, authenticatedUser)
-        .then(errors => {
-          if (errors.length) {
-            e.preventDefault();
-            this.setState({ errors })
-          } else {
-            context.actions.createCourse(course, authenticatedUser)
-              .then(this.props.history.push('/courses'));
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          this.props.history.push('/error');
-        });
-    } else {
-      console.log("nope")
-      context.data.createCourse()
-    }
-  };
+  
 
   cancel = () => {
     this.props.history.push('/');

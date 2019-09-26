@@ -14,11 +14,26 @@ export class Provider extends Component {
     super();
     this.data = new Data();
   }
-updateCourse = async (courses, credentials, authUser)=>{
   
-}
+  render() {
+    const { authenticatedUser } = this.state;
+    const value = {
+      authenticatedUser,
+      data: this.data,
+      actions: {
+        updateCourse: this.updateCourse,
+        getCourse: this.getCourse,
+        signIn: this.signIn,
+        signOut: this.signOut
+      }
+    };
 
-
+    return (
+      <Context.Provider value={value}>
+        {this.props.children}
+      </Context.Provider>
+    );
+  }
   signIn = async (emailAddress, password) => {
     const user = await this.data.getUser(emailAddress, password);
     if (user !== null) {
@@ -40,27 +55,8 @@ updateCourse = async (courses, credentials, authUser)=>{
     });
     Cookies.remove('authenticatedUser');
   }
-  createCourse = async(courses) => {
+  createCourse = async (courses) => {
 
-  }
-  render() {
-    const { authenticatedUser } = this.state;
-    const value = {
-      authenticatedUser,
-      data: this.data,
-      actions: {
-        updateCourse: this.updateCourse,
-        getCourse: this.getCourse,
-        signIn: this.signIn,
-        signOut: this.signOut
-      }
-    };
-
-    return (
-      <Context.Provider value={value}>
-        {this.props.children}
-      </Context.Provider>
-    );
   }
 }
 

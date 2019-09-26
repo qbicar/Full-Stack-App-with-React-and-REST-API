@@ -48,9 +48,4 @@ export default class App extends Component {
   }
 }
 
-//TODO: signin and signup to work
-//TODO: header to change on signin
 //TODO: components to actually do something
-//TODO: authorization
-//TODO: context
-//TODO: 
