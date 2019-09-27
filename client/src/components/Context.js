@@ -55,9 +55,7 @@ export class Provider extends Component {
     });
     Cookies.remove('authenticatedUser');
   }
-  createCourse = async (courses) => {
-
-  }
+ 
 }
 
 export const Consumer = Context.Consumer;

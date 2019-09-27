@@ -110,7 +110,7 @@ class UpdateCourse extends Component {
 
       <div>
         {courses.map(course =>
-          <div className="bounds course--detail">
+          <div key={course.id} className="bounds course--detail">
             <h1>Update Course</h1>
             <div>
               <form onSubmit={this.submit}>

@@ -53,7 +53,7 @@ class CourseDetails extends Component {
     return (
       <div className="bounds">
         {courses.map(course =>
-          <div>
+          <div key={course.id}>
             <div className="actions--bar">
               <div className="bounds">
                 <div key={course.id} className="grid-100">

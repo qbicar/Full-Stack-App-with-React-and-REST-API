@@ -35,7 +35,7 @@ export default class Courses extends Component {
     const password = authUser.password;
     const userId = authUser.id;
     const credentials = btoa(`${emailAddress}:` + password);
-    context.data.createCourse(courses, credentials, authUser)
+    // context.data.createCourse(courses, credentials, authUser)
 
     if (this.state.description === '' || this.state.title === '') {
       this.setState({
@@ -49,14 +49,11 @@ export default class Courses extends Component {
           'Content-Type': 'application/json; charset=utf-8',
           'Authorization': `Basic ${credentials}`
         },
-
         auth:
         {
           emailAddress: emailAddress,
           password
         },
-        // 'Basic' + btoa(this.props.context.authenticatedUser.emailAddress),
-
         data: {
           title: this.state.title,
           description: this.state.description,
@@ -80,20 +77,20 @@ export default class Courses extends Component {
     }
   }
 
-  componentDidMount() {
+  // componentDidMount() {
 
-    axios.post('http://localhost:5000/api/courses/')
-      .then(response => {
-        this.setState({
-          courses: response.data,
-        })
-      })
-      .catch(error => {
-        if (error.status === 404) {
-          console.log('ohh nooo')
-        }
-      })
-  }
+  //   axios.post('http://localhost:5000/api/courses/')
+  //     .then(response => {
+  //       this.setState({
+  //         courses: response.data,
+  //       })
+  //     })
+  //     .catch(error => {
+  //       if (error.status === 404) {
+  //         console.log('ohh nooo')
+  //       }
+  //     })
+  // }
 
 
   render() {
