@@ -97,11 +97,11 @@ router.post('/courses/', async (req, res, next) => {
 router.put('/courses/:id', async (req, res, next) => {
   try {
     const course = await Courses.findByPk(req.params.id)
-      if (req.body.title && req.body.description) {
+      if (course.title === '' || course.description === '') {
+        res.status(400).json({ message: 'Missing Information' })
+      } else {
         await course.update(req.body);
         res.status(204).end();
-      } else {
-        res.status(400).json({ message: 'Missing Information' })
       }
     }catch (error) {
     if (error.name === 'SequelizeValidationError') {
