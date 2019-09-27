@@ -25,7 +25,7 @@ export default class Courses extends Component {
     });
   };
 
-  submit = (e) => {
+  submit = e => {
 
     const { context } = this.props;
     const { id, title, description, estimatedTime, materialsNeeded, errors } = this.state;
@@ -33,11 +33,11 @@ export default class Courses extends Component {
     const authUser = context.authenticatedUser;
     const emailAddress = authUser.emailAddress;
     const password = authUser.password;
-     const userId = authUser.id;
+    const userId = authUser.id;
     const credentials = btoa(`${emailAddress}:` + password);
     context.data.createCourse(courses, credentials, authUser)
 
-    if (courses.description === '' || courses.title === '') {
+    if (this.state.description === '' || this.state.title === '') {
       this.setState({
         errors: 'Course and Description are required'
       })
@@ -58,13 +58,14 @@ export default class Courses extends Component {
         // 'Basic' + btoa(this.props.context.authenticatedUser.emailAddress),
 
         data: {
-          title: courses.title,
-          description: courses.description,
-          estimatedTime: courses.estimatedTime,
-          materialsNeeded: courses.materialsNeeded
+          title: this.state.title,
+          description: this.state.description,
+          estimatedTime: this.state.estimatedTime,
+          materialsNeeded: this.state.materialsNeeded,
+          userId: userId
         }
       }).then(() => {
-        alert("Course updated successfully");
+        alert("Course created successfully");
         this.props.history.push("/");
       }).catch(err => {
         if (err.response.status === 400) {
@@ -108,11 +109,9 @@ export default class Courses extends Component {
         <h1>Create Course</h1>
         <div>
           <div>
-            {errors.length > 0
-              ? <h2 className="validation--errors--label">Validation Errors</h2> : ''}
+
             <p>
-              {errors.length > 0
-                ? errors.map(error => <ul key={error}>error</ul>) : ''}
+
             </p>
           </div>
           <Form
