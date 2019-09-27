@@ -58,7 +58,6 @@ class UpdateCourse extends Component {
           emailAddress: emailAddress,
           password
         },
-        // 'Basic' + btoa(this.props.context.authenticatedUser.emailAddress),
 
         data: {
           title: courses.title,
@@ -81,8 +80,6 @@ class UpdateCourse extends Component {
       })
     }
   }
-
-
 
   componentDidMount() {
 

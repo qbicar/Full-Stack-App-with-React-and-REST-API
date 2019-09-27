@@ -76,23 +76,7 @@ export default class Courses extends Component {
       })
     }
   }
-
-  // componentDidMount() {
-
-  //   axios.post('http://localhost:5000/api/courses/')
-  //     .then(response => {
-  //       this.setState({
-  //         courses: response.data,
-  //       })
-  //     })
-  //     .catch(error => {
-  //       if (error.status === 404) {
-  //         console.log('ohh nooo')
-  //       }
-  //     })
-  // }
-
-
+  
   render() {
     const { errors, title, description, estimatedTime, materialsNeeded, } = this.state;
     const courses = this.state.courses;

@@ -30,13 +30,12 @@ class CourseDetails extends Component {
     e.preventDefault();
     const { context } = this.props;
     const authUser = context.authenticatedUser;
-    let password = prompt("Please enter your password to confirm this action");
 
     axios.delete('http://localhost:5000/api/courses/' + this.props.match.params.id, {
       method: 'DELETE',
       auth: {
         username: `${authUser.emailAddress}`,
-        password: password
+        password: `${authUser.password}`
       },
     }).then(() => {
       this.props.history.push("/");

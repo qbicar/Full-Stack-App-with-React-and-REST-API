@@ -12,6 +12,8 @@ import './styles/global.css';
 import './App.css';
 import withContext from './components/Context';
 import PrivateRoute from './components/PrivateRoute';
+import Error from './components/Error';
+import NotFound from './components/NotFound';
 
 const CourseDetailsWithContext = withContext(CourseDetails)
 const CoursesWithContext = withContext(Courses)
@@ -19,7 +21,6 @@ const UpdateCourseWithContext = withContext(UpdateCourse)
 const CreateCourseWithContext = withContext(CreateCourse)
 const UserSignInWithContext = withContext(UserSignIn);
 const HeaderWithContext = withContext(Header);
-//   const AuthWithContext = withContext(Authenticated);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignOutWithContext = withContext(UserSignOut);
 
@@ -29,8 +30,6 @@ export default class App extends Component {
     return (
 
       <div className="container">
-
-
         <BrowserRouter>
           <HeaderWithContext />
           <Switch>
@@ -41,6 +40,8 @@ export default class App extends Component {
             <Route path="/signin" component={UserSignInWithContext} />
             <Route path="/signup" component={UserSignUpWithContext} />
             <Route path="/signout" component={UserSignOutWithContext} />
+            <Route path="/error" component={Error} />
+            <Route component={NotFound} />
           </Switch>
         </BrowserRouter>
       </div>

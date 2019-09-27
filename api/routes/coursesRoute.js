@@ -107,7 +107,7 @@ router.put('/courses/:id', async (req, res, next) => {
       }
     }catch (error) {
     if (error.name === 'SequelizeValidationError') {
-      res.status(404).json({ error: error.message })
+      res.status(403).json({ error: error.message })
     } else {
       return next(error)
     }
