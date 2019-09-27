@@ -28,8 +28,8 @@ export default class Courses extends Component {
   submit = e => {
 
     const { context } = this.props;
-    const { id, title, description, estimatedTime, materialsNeeded, errors } = this.state;
-    const courses = { id, title, description, estimatedTime, materialsNeeded, errors };
+    
+  
     const authUser = context.authenticatedUser;
     const emailAddress = authUser.emailAddress;
     const password = authUser.password;
@@ -79,9 +79,9 @@ export default class Courses extends Component {
   
   render() {
     const { errors, title, description, estimatedTime, materialsNeeded, } = this.state;
-    const courses = this.state.courses;
+    
     const { context } = this.props;
-    const authUser = context.authenticatedUser;
+
     const { authenticatedUser } = this.props.context;
 
     return (
@@ -90,9 +90,7 @@ export default class Courses extends Component {
         <h1>Create Course</h1>
         <div>
           <div>
-
             <p>
-
             </p>
           </div>
           <Form

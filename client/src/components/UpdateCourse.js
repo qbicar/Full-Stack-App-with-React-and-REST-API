@@ -1,21 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-class UpdateCourse extends Component {
+class UpdateCourse extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       courses: [],
-      id: "",
-      title: "",
-      description: "",
-      materialsNeeded: "",
-      estimatedTime: "",
-      firstName: "",
-      lastName: ""
+      errors: []
     }
   }
+
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -27,63 +22,36 @@ class UpdateCourse extends Component {
     });
   }
 
-
-  submit = e => {
+  submit = async (e) => {
     e.preventDefault();
     const { context } = this.props;
-    const { id, title, description, estimatedTime, materialsNeeded } = this.state;
-    const courses = { id, title, description, estimatedTime, materialsNeeded };
     const authUser = context.authenticatedUser;
+    const authUserId = authUser.id;
     const emailAddress = authUser.emailAddress;
     const password = authUser.password;
-    const credentials = btoa(`${emailAddress}:` + password);
-    context.data.updateCourse(courses, credentials, authUser)
 
+    const data = this.state;
+    data.userId = authUserId;
 
-    if (courses.description === '' || courses.title === '') {
+    //PUT request
+    const res = await context.data.api(`/courses/${this.props.match.params.id}`, "PUT", data, true, { emailAddress, password });
+    if (res.status === 204) {
+      alert("Course udated successfully")
+      window.location.href = '/';
+    } else if (res.status === 400) {
       this.setState({
-        errors: 'Course and Description are required'
+        errors: ['Fill out both required fields.']
       })
+      return;
+    } else if (res.status === 401 || res.status === 403) {
+      window.location.href = '/forbidden';
     } else {
-      axios({
-        method: 'PUT',
-        url: 'http://localhost:5000/api/courses/' + this.props.match.params.id,
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-          'Authorization': `Basic ${credentials}`
-        },
-
-        auth:
-        {
-          emailAddress: emailAddress,
-          password
-        },
-
-        data: {
-          title: courses.title,
-          description: courses.description,
-          estimatedTime: courses.estimatedTime,
-          materialsNeeded: courses.materialsNeeded
-        }
-      }).then(() => {
-        alert("Course updated successfully");
-        this.props.history.push("/");
-      }).catch(err => {
-        if (err.response.status === 400) {
-          this.setState({
-            errors: err.response.data.message
-          })
-        } else if (err.response.status === 500) {
-          alert("Course and Description must be updated ")
-          this.props.history.push("/error");
-        }
-      })
+      window.location.href = '/error';
     }
   }
 
   componentDidMount() {
-
-    axios.get('http://localhost:5000/api/courses/' + this.props.match.params.id)
+    axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
       .then(response => {
         this.setState({
           courses: response.data,
@@ -92,12 +60,10 @@ class UpdateCourse extends Component {
       })
       .catch(error => {
         if (error.status === 404) {
-          console.log('ohh nooo')
+          console.log('Unable to upload course.')
         }
       })
   }
-
-
 
   render() {
     const courses = this.state.courses;
@@ -109,6 +75,17 @@ class UpdateCourse extends Component {
         {courses.map(course =>
           <div key={course.id} className="bounds course--detail">
             <h1>Update Course</h1>
+            {
+              this.state.errors.length ?
+                <div>
+                  <h2 className="validation--errors--label">Validation errors</h2>
+                  <div className="validation-errors">
+                    <ul>
+                      {this.state.errors.map((error, i) => <li key={i}>{error}</li>)}
+                    </ul>
+                  </div>
+                </div> : null
+            }
             <div>
               <form onSubmit={this.submit}>
                 <div className="grid-66">
@@ -152,4 +129,4 @@ class UpdateCourse extends Component {
   }
 }
 
-export default UpdateCourse
+export default UpdateCourse;

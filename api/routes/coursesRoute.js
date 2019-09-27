@@ -98,8 +98,6 @@ router.put('/courses/:id', async (req, res, next) => {
   try {
     const course = await Courses.findByPk(req.params.id)
       if (req.body.title && req.body.description) {
-        req.body.estimatedTime === req.body.estimatedTime &&
-          req.body.materialsNeeded === req.body.materialsNeeded
         await course.update(req.body);
         res.status(204).end();
       } else {
