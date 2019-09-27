@@ -79,13 +79,13 @@ router.post('/courses/', async (req, res, next) => {
   try {
     const course = req.body;
     if (req.body.title && req.body.description) {
-    const data = await Courses.create(course)
-    res.location(`/courses/${data.id}`)
-    res.status(201).end();
-    }else{
+      const data = await Courses.create(course)
+      res.location(`/courses/${data.id}`)
+      res.status(201).end();
+    } else {
       res.status(400).json({ message: 'Missing Information' })
     }
-    
+
   }
   catch (error) {
     error.status = 400;

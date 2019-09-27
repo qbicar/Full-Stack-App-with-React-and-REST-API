@@ -56,7 +56,7 @@ class CourseDetails extends Component {
           <div>
             <div className="actions--bar">
               <div className="bounds">
-                <div className="grid-100">
+                <div key={course.id} className="grid-100">
                   {(authUser && authUser.id === course.user.id) &&
                     <span> <Link key="0" className="button" to={'/courses/' + this.props.match.params.id + '/update'}>Update Course</Link>
                       <Link key="1" className="button" to="#" onClick={this.delete}>Delete Course</Link></span>

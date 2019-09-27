@@ -10,7 +10,7 @@ export default (props) => {
   } = props;
 
   function handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault()
     submit();
   }
 
@@ -41,9 +41,9 @@ function ErrorsDisplay({ errors }) {
       <div>
         <h2 className="validation--errors--label">Validation errors</h2>
         <div className="validation-errors">
-          <ul>
+          {/* <ul>
             {errors.map((error, i) => <li key={i}>{error}</li>)}
-          </ul>
+          </ul> */}
         </div>
       </div>
     );
