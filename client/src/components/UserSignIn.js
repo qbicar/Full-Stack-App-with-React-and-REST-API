@@ -1,13 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import Form from './Form';
-
+//<=======usersign in component ========================
 class UserSignIn extends React.Component {
   state = {
     emailAddress: '',
     password: '',
     errors: [],
   }
+//<=========change function , on change (keydown input) the value placed will be typed into textarea
 
   change = (event) => {
     const name = event.target.name;
@@ -18,6 +19,9 @@ class UserSignIn extends React.Component {
       };
     });
   }
+//<===========handle my submit function ===========================
+//<===========action will sign in on submit
+//<===========if user credentials is incorrect an alert will say username or password is incorrect and signin will load again
 
   submit = () => {
     const { context } = this.props;
@@ -27,6 +31,8 @@ class UserSignIn extends React.Component {
       .then(user => {
         if (user === null) {
           this.setState(() => {
+            alert("username or password incorrect, Please try again")
+            window.location.href="/signin"
             return { errors: ["Username or Password Incorrect"] };
             
           });
@@ -40,7 +46,7 @@ class UserSignIn extends React.Component {
       })
   }
 
-
+//<=========render will display how the page will be displayed in html
   render() {
     const { emailAddress, password, errors } = this.state;
     return (

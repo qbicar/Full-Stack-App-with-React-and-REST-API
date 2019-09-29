@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+//<===== stateless component to display an error message when and error is found
 const Error = () => {
   return (
     <div className="bounds">

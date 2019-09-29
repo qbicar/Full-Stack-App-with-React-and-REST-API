@@ -1,10 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-
+//<===== stateless component to display my header with home/ signin/ signup & welcome "user"
 const Header = (props) => {
   const { context } = props;
   const authUser = context.authenticatedUser;
-
+//<=========If authenticated user is signed in it will display a welcome message with their name 
   return (
     <div className="header">
       <div className="bounds">

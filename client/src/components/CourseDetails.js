@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-
+//<========set class name CourseDetails and the state of courses to an array to later be used
 class CourseDetails extends Component {
   constructor(props) {
     super(props);
@@ -10,6 +10,7 @@ class CourseDetails extends Component {
       courses: [],
     }
   }
+//<============fetch my api and the id and set the property of courses to my response data from axios
 
   componentDidMount() {
 
@@ -25,7 +26,7 @@ class CourseDetails extends Component {
         }
       })
   }
-
+//<===========Delete function/ if course belongs to user and their id ,course will delete
   delete = async (e) => {
     e.preventDefault();
     const { context } = this.props;
@@ -45,6 +46,8 @@ class CourseDetails extends Component {
         this.props.history.push("/error");
       });
   }
+
+//<==========Render the page that will be displayed . Courses (all my courses in data base will map but return the one with that match id and its info) & display in proper placement in html
   render() {
     const { context } = this.props;
     const authUser = context.authenticatedUser;

@@ -3,7 +3,7 @@ import axios from 'axios';
 import NotFound from './NotFound';
 import { Link } from 'react-router-dom';
 
-
+//<======= set state of Courses which will display all my courses on home page
 class Courses extends Component {
 
   state = { courses: [] }
@@ -24,12 +24,12 @@ class Courses extends Component {
         })
       })
   }
-
+//<=======on load my page will get the api==========================
   componentDidMount() {
     this.getCourses()
   }
 
-
+//<==========Render the page that will be displayed . Courses (all my courses in data base will map ) if the length is more than 0 & display in proper placement in html
   render() {
     const { courses } = this.state;
 

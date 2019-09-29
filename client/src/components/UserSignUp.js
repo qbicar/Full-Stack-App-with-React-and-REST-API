@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Form from './Form';
 
+//<=========stateful component and setting state of all variables to an empty string to get value passed through
 export default class UserSignUp extends Component {
   state = {
     firstName: '',
@@ -12,6 +13,7 @@ export default class UserSignUp extends Component {
     errors: []
   }
 
+//<=========change function , on change (keydown input) the value placed will be typed into textarea
 
   change = (event) => {
     const name = event.target.name;
@@ -23,7 +25,8 @@ export default class UserSignUp extends Component {
       };
     });
   }
-
+//<===========handle my submit function ===========================
+//<===========setting variables to this.state to be later used ====
 
   submit = () => {
     const { context } = this.props;
@@ -35,7 +38,7 @@ export default class UserSignUp extends Component {
     const password = this.state.password;
     const confirmPassword = this.state.confirmPassword;
 
-    //input validators
+  //<=======validator error messages ====================
     if (firstName === '') {
       errorList.push('First Name must be provided.');
     }
@@ -60,7 +63,7 @@ export default class UserSignUp extends Component {
         return { errors: errorList };
       });
     }else{
-
+//<============create user if there isnt an error==================
     const {
       firstName,
       lastName,
@@ -88,11 +91,12 @@ const user = {
           };
     }
   }
-
+//<==========cancel button function to go back home
   cancel = () => {
     this.props.history.push('/');
   }
 
+//<=========render will display how the page will be displayed in html and show validation error if form is not filled out completly .
 
   render() {
     const {

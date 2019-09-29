@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+//<========state component with courses and error as an state array 
 class UpdateCourse extends React.Component {
   constructor(props) {
     super(props);
@@ -10,7 +10,7 @@ class UpdateCourse extends React.Component {
       errors: []
     }
   }
-
+//<=========change function , on change (keydown input) the value placed will be typed into textarea
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -21,7 +21,7 @@ class UpdateCourse extends React.Component {
       };
     });
   }
-
+//<===========handle my submit function ===========================
   submit = async (e) => {
     e.preventDefault();
     const { context } = this.props;
@@ -34,7 +34,7 @@ class UpdateCourse extends React.Component {
     const data = this.state;
     data.userId = authUserId;
 
-    //PUT request
+ //<============if course title or description is submitted with no information , the user will get an alert and redirected to missing info route
     if (course.description === '' || course.title === '') {
       this.setState({
         errors: 'Course and Description are required'
@@ -43,6 +43,7 @@ class UpdateCourse extends React.Component {
       window.location.href= '/missing';
     }
     else{
+//<=====================if information is correct it will await the response , if info is filled correct , the fields will update and a alert will display successful and redirect to home courses
     const res = await context.data.api(`/courses/${this.props.match.params.id}`, "PUT", data, true, { emailAddress, password });
     if (res.status === 204) {
       alert("Course udated successfully")
@@ -59,7 +60,7 @@ class UpdateCourse extends React.Component {
     }
   }
   }
-
+//component did mount will get the api with its id 
   componentDidMount() {
     axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
       .then(response => {
@@ -74,7 +75,8 @@ class UpdateCourse extends React.Component {
         }
       })
   }
-
+//<=========render will display how the page will be displayed in html . the course will map to get that course with the matching id
+//<=========it will also check to see if it is the authorized user. If it is then auth user can submit
   render() {
     const courses = this.state.courses;
     const { context } = this.props;

@@ -1,6 +1,6 @@
 
 import React from 'react';
-
+//<===== stateless component to display an forbidden message when user is unauthorized
 const Forbidden = () => {
   return (<div className="bounds" >
     <h1> Forbidden </h1>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+//<===== stateless component to display an missing information message when Update is missing a description or title
 const Missinginfo = () => {
   return (
     <div className="bounds">
