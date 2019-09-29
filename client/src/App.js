@@ -15,6 +15,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Error from './components/Error';
 import NotFound from './components/NotFound';
 import Forbidden from './components/Forbidden';
+import Missinginfo from './components/Missinginfo';
 
 
 const CourseDetailsWithContext = withContext(CourseDetails)
@@ -25,6 +26,7 @@ const UserSignInWithContext = withContext(UserSignIn);
 const HeaderWithContext = withContext(Header);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignOutWithContext = withContext(UserSignOut);
+
 
 export default class App extends Component {
 
@@ -42,9 +44,11 @@ export default class App extends Component {
             <Route path="/signin" component={UserSignInWithContext} />
             <Route path="/signup" component={UserSignUpWithContext} />
             <Route path="/signout" component={UserSignOutWithContext} />
+            <Route path="/forbidden" component={Forbidden} />
+            <Route path="/missing" component={Missinginfo} />
             <Route path="/error" component={Error} />
             <Route component={NotFound} />
-            <Route path="/forbidden" component={Forbidden} />
+            
           </Switch>
         </BrowserRouter>
       </div>

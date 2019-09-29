@@ -28,6 +28,7 @@ class UserSignIn extends React.Component {
         if (user === null) {
           this.setState(() => {
             return { errors: ["Username or Password Incorrect"] };
+            
           });
         } else {
           this.props.history.push(from); 

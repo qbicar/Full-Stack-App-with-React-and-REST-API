@@ -40,7 +40,7 @@ function ErrorsDisplay({ errors }) {
     errorsDisplay = (
       <div>
         <h2 className="validation--errors--label">Validation errors</h2>
-        <p>Course Title and Description Required</p>
+        <p>Please Fill Out Required Fields Correctly</p>
         <div className="validation-errors">
         </div>
       </div>

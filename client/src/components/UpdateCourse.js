@@ -25,6 +25,7 @@ class UpdateCourse extends React.Component {
   submit = async (e) => {
     e.preventDefault();
     const { context } = this.props;
+    const course = this.state
     const authUser = context.authenticatedUser;
     const authUserId = authUser.id;
     const emailAddress = authUser.emailAddress;
@@ -34,13 +35,21 @@ class UpdateCourse extends React.Component {
     data.userId = authUserId;
 
     //PUT request
+    if (course.description === '' || course.title === '') {
+      this.setState({
+        errors: 'Course and Description are required'
+      })
+      alert("Please fill out missing information")
+      window.location.href= '/missing';
+    }
+    else{
     const res = await context.data.api(`/courses/${this.props.match.params.id}`, "PUT", data, true, { emailAddress, password });
     if (res.status === 204) {
       alert("Course udated successfully")
       window.location.href = '/';
     } else if (res.status === 400) {
       this.setState({
-        errors: ['Fill out both required fields.']
+        errors: ['Fill out required fields (title / description).']
       })
       return;
     } else if (res.status === 401 || res.status === 403) {
@@ -48,6 +57,7 @@ class UpdateCourse extends React.Component {
     } else {
       window.location.href = '/error';
     }
+  }
   }
 
   componentDidMount() {
@@ -75,17 +85,6 @@ class UpdateCourse extends React.Component {
         {courses.map(course =>
           <div key={course.id} className="bounds course--detail">
             <h1>Update Course</h1>
-            {
-              this.state.errors.length ?
-                <div>
-                  <h2 className="validation--errors--label">Validation errors</h2>
-                  <div className="validation-errors">
-                    <ul>
-                      {this.state.errors.map((error, i) => <li key={i}>{error}</li>)}
-                    </ul>
-                  </div>
-                </div> : null
-            }
             <div>
               <form onSubmit={this.submit}>
                 <div className="grid-66">

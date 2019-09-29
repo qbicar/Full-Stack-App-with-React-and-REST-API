@@ -27,47 +27,67 @@ export default class UserSignUp extends Component {
 
   submit = () => {
     const { context } = this.props;
+    let errorList = [];
+
+    const firstName = this.state.firstName;
+    const lastName = this.state.lastName;
+    const emailAddress = this.state.emailAddress;
+    const password = this.state.password;
+    const confirmPassword = this.state.confirmPassword;
+
+    //input validators
+    if (firstName === '') {
+      errorList.push('First Name must be provided.');
+    }
+    if (lastName === '') {
+      errorList.push('Last Name must be provided.');
+    }
+    if (emailAddress === '') {
+      errorList.push('Email Address must be provided.');
+    }
+    if (password === '') {
+      errorList.push('Password must be provided.');
+    }
+    else if (confirmPassword === '') {
+      errorList.push('Confirm Password must be provided.');
+    }
+    else if (password !== confirmPassword) {
+      errorList.push('Password and Confirm Password do not match.');
+    }
+
+    if (errorList.length > 0) {
+      this.setState(() => {
+        return { errors: errorList };
+      });
+    }else{
 
     const {
       firstName,
       lastName,
       emailAddress,
       password,
-      confirmPassword
+      errors
     } = this.state;
 
-
-    const user = {
+const user = {
       firstName,
       lastName,
       emailAddress,
-      password,
+      password
     };
 
-
-    if (password !== confirmPassword) {
-      this.setState(() => {
-        return { errors: ['Passwords must match'] }
-      })
-    } else {
       context.data.createUser(user)
-        .then(errors => {
           if (errors.length) {
-            this.setState({ errors });
+            this.setState(() => {
+              window.location.href='/'
+              return { errors: [errors] };
+            });
           } else {
-            context.actions.signIn(emailAddress, password)
-              .then(() => {
-                this.props.history.push('/');
-              });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          this.props.history.push('/error');
-        });
+            alert("SUCCESS ,You Are Now Signed Up")
+            window.location.href="/" 
+          };
     }
   }
-
 
   cancel = () => {
     this.props.history.push('/');
@@ -88,7 +108,8 @@ export default class UserSignUp extends Component {
       <div className="bounds">
         <div className="grid-33 centered signin">
           <h1>Sign Up</h1>
-          <div>
+         
+
             <Form
               cancel={this.cancel}
               errors={errors}
@@ -136,7 +157,7 @@ export default class UserSignUp extends Component {
             <p>
               Already have a user account? <Link to="/signin">Click here</Link> to sign in!
                         </p>
-          </div>
+          
         </div>
       </div>
     )

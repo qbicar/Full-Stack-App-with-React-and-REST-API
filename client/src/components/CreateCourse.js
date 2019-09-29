@@ -25,7 +25,7 @@ export default class Courses extends Component {
     });
   };
 
-  submit = e => {
+  submit = () => {
 
     const { context } = this.props;
     
@@ -79,9 +79,6 @@ export default class Courses extends Component {
   
   render() {
     const { errors, title, description, estimatedTime, materialsNeeded, } = this.state;
-    
-    const { context } = this.props;
-
     const { authenticatedUser } = this.props.context;
 
     return (
