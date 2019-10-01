@@ -1,3 +1,4 @@
+
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -7,7 +8,7 @@ class UpdateCourse extends React.Component {
     super(props);
     this.state = {
       courses: [],
-      errors: []
+      errors: [],
     }
   }
 //<=========change function , on change (keydown input) the value placed will be typed into textarea
@@ -37,10 +38,9 @@ class UpdateCourse extends React.Component {
  //<============if course title or description is submitted with no information , the user will get an alert and redirected to missing info route
     if (course.description === '' || course.title === '') {
       this.setState({
-        errors: 'Course and Description are required'
+        errors: ['Course and Description are required']
       })
       alert("Please fill out missing information")
-      window.location.href= '/missing';
     }
     else{
 //<=====================if information is correct it will await the response , if info is filled correct , the fields will update and a alert will display successful and redirect to home courses
@@ -87,6 +87,17 @@ class UpdateCourse extends React.Component {
         {courses.map(course =>
           <div key={course.id} className="bounds course--detail">
             <h1>Update Course</h1>
+            {
+              this.state.errors.length ?
+                <div>
+                  <h2 className="validation--errors--label">Validation errors</h2>
+                  <div className="validation-errors">
+                    <ul>
+                      {this.state.errors.map((error, i) => <li key={i}>{error}</li>)}
+                    </ul>
+                  </div>
+                </div> : null
+            }
             <div>
               <form onSubmit={this.submit}>
                 <div className="grid-66">

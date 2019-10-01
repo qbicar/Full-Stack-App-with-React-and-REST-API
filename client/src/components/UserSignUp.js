@@ -86,8 +86,8 @@ const user = {
               return { errors: [errors] };
             });
           } else {
-            alert("SUCCESS ,You Are Now Signed Up")
             window.location.href="/" 
+            alert("SUCCESS ,You Are Now Signed Up")
           };
     }
   }

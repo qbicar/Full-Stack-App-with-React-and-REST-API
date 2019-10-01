@@ -1,3 +1,4 @@
+//<========imports=============================================
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import UserSignUp from './components/UserSignUp';
@@ -15,9 +16,9 @@ import PrivateRoute from './components/PrivateRoute';
 import Error from './components/Error';
 import NotFound from './components/NotFound';
 import Forbidden from './components/Forbidden';
-import Missinginfo from './components/Missinginfo';
 
 
+//<=============variables to use component with context authentication
 const CourseDetailsWithContext = withContext(CourseDetails)
 const CoursesWithContext = withContext(Courses)
 const UpdateCourseWithContext = withContext(UpdateCourse)
@@ -29,7 +30,7 @@ const UserSignOutWithContext = withContext(UserSignOut);
 
 
 export default class App extends Component {
-
+//<==================render routes and the component it belongs to=====
   render() {
     return (
 
@@ -45,7 +46,6 @@ export default class App extends Component {
             <Route path="/signup" component={UserSignUpWithContext} />
             <Route path="/signout" component={UserSignOutWithContext} />
             <Route path="/forbidden" component={Forbidden} />
-            <Route path="/missing" component={Missinginfo} />
             <Route path="/error" component={Error} />
             <Route component={NotFound} />
             
@@ -55,5 +55,3 @@ export default class App extends Component {
     )
   }
 }
-
-//TODO: components to actually do something

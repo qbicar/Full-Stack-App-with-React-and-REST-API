@@ -1,5 +1,5 @@
 import React from 'react';
-//<=========Form will handle my validation errors on submit and cancel action on cancel===========
+//<========setting const variables with the parameter props to props
 export default (props) => {
   const {
     cancel,
@@ -8,17 +8,17 @@ export default (props) => {
     submitButtonText,
     elements,
   } = props;
-
+//<=============handle submit functon ====================
   function handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
     submit();
   }
-
+//<===========handle cancel button action============
   function handleCancel(event) {
     event.preventDefault();
     cancel();
   }
-
+//<===========handle errors and how it will be displayed
   return (
     <div>
       <ErrorsDisplay errors={errors} />
@@ -39,9 +39,11 @@ function ErrorsDisplay({ errors }) {
   if (errors.length) {
     errorsDisplay = (
       <div>
-        <h2 className="validation--errors--label">Validation errors</h2>
-        <p>Please Fill Out Required Fields Correctly</p>
+        <h2 className="validation--errors--label">Validation error:</h2>
         <div className="validation-errors">
+          <ul>
+            {errors.map((error, i) => <li key={i}>{error}</li>)}
+          </ul>
         </div>
       </div>
     );
