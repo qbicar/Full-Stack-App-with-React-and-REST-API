@@ -8,14 +8,14 @@ export default class UserSignIn extends Component {
     password: '',
     errors: []
   }
-//<=============how webpage will be displayed =============
+  //<=============how webpage will be displayed =============
   render() {
     const {
       emailAddress,
       password,
       errors,
     } = this.state;
-//<=========return html page template===============
+    //<=========return html page template===============
     return (
       <div className="bounds">
         <div className="grid-33 centered signin">
@@ -68,7 +68,7 @@ export default class UserSignIn extends Component {
     const { from } = this.props.location.state || { from: { pathname: '/signin' } };
 
     context.actions.signIn(emailAddress, password)
-    
+
       .then(user => {
         if (user === null) {
           this.setState(() => {
@@ -76,10 +76,10 @@ export default class UserSignIn extends Component {
           })
         } else {
           this.props.history.push(from);
-          window.location.href='/'
+          window.location.href = '/'
         }
       })
-      
+
       .catch((error) => {
         console.error(error);
         this.props.history.push('/error');
